@@ -46,7 +46,6 @@ frameworks/runtime-src/proj.ios_mac/fastlane/screenshots
 frameworks/runtime-src/proj.ios_mac/fastlane/test_output
 frameworks/runtime-src/proj.ios_mac/iOSInjectionProject/
 
-**/proj.android/**
 **/proj.linux/**
 **/proj.tizen/**
 **/proj.win10/**
