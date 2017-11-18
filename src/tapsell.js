@@ -1,7 +1,8 @@
 var requestAdCallbacks = {};
 var showAdCallbacks = {};
+var requestNativeBannerCallbacks = {};
 var rewardListenerCb = undefined;
-var Tapsell, callbacks;
+var Tapsell, callbacks, nativeBannerCallbacks;
 
 if (cc.sys.os == cc.sys.OS_ANDROID) {
 	Tapsell = {
@@ -49,6 +50,45 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 
 		setRewardListener: function(rewardListener) {
 			rewardListenerCb = rewardListener;
+		},
+
+		requestNativeBannerAd: function(
+			zoneId,
+			onAdAvailable,
+			onNoAdAvailable,
+			onNoNetwork,
+			onError
+		) {
+			requestNativeBannerCallbacks[zoneId] = {
+				ON_AD_AVAILABLE_CB: onAdAvailable,
+				ON_ERROR_CB: onError,
+				ON_NO_AD_AVAILABLE_CB: onNoAdAvailable,
+				ON_NO_NETWORK_CB: onNoNetwork
+			};
+			jsb.reflection.callStaticMethod(
+				"org/cocos2dx/javascript/Tapsell",
+				"requestNativeBannerAd",
+				"(Ljava/lang/String;)V",
+				zoneId
+			);
+		},
+
+		onNativeBannerAdShown: function(adId) {
+			jsb.reflection.callStaticMethod(
+				"org/cocos2dx/javascript/Tapsell",
+				"nativeBannerAdShown",
+				"(Ljava/lang/String;)V",
+				adId
+			);
+		},
+
+		onNativeBannerAdClicked: function(adId) {
+			jsb.reflection.callStaticMethod(
+				"org/cocos2dx/javascript/Tapsell",
+				"nativeBannerAdClicked",
+				"(Ljava/lang/String;)V",
+				adId
+			);
 		},
 
 		initialize: function(appKey) {
@@ -133,6 +173,41 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 		ROTATION_UNLOCKED: 3,
 		ROTATION_LOCKED_REVERSED_LANDSCAPE: 4,
 		ROTATION_LOCKED_REVERSED_PORTRAIT: 5
+	};
+
+	nativeBannerCallbacks = {
+		onAdAvailable: function(zoneId, adId) {
+			if (requestNativeBannerCallbacks[zoneId]["ON_AD_AVAILABLE_CB"]) {
+				requestNativeBannerCallbacks[zoneId]["ON_AD_AVAILABLE_CB"](
+					adId
+				);
+				requestNativeBannerCallbacks[zoneId][
+					"ON_AD_AVAILABLE_CB"
+				] = undefined;
+			}
+		},
+		onNoAdAvailable: function(zoneId) {
+			if (requestNativeBannerCallbacks[zoneId]["ON_NO_AD_AVAILABLE_CB"]) {
+				requestNativeBannerCallbacks[zoneId]["ON_NO_AD_AVAILABLE_CB"]();
+				requestNativeBannerCallbacks[zoneId][
+					"ON_NO_AD_AVAILABLE_CB"
+				] = undefined;
+			}
+		},
+		onNoNetwork: function(zoneId) {
+			if (requestNativeBannerCallbacks[zoneId]["ON_NO_NETWORK_CB"]) {
+				requestNativeBannerCallbacks[zoneId]["ON_NO_NETWORK_CB"]();
+				requestNativeBannerCallbacks[zoneId][
+					"ON_NO_NETWORK_CB"
+				] = undefined;
+			}
+		},
+		onError: function(zoneId, error) {
+			if (requestNativeBannerCallbacks[zoneId]["ON_ERROR_CB"]) {
+				requestNativeBannerCallbacks[zoneId]["ON_ERROR_CB"](error);
+				requestNativeBannerCallbacks[zoneId]["ON_ERROR_CB"] = undefined;
+			}
+		}
 	};
 
 	callbacks = {

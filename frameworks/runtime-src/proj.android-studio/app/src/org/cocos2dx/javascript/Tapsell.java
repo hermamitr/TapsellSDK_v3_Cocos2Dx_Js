@@ -1,14 +1,14 @@
 package org.cocos2dx.javascript;
 /* Created by ahmadrezasy on 10/11/17. */
 
-import android.util.Log;
-
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
 
 import ir.tapsell.sdk.TapsellCocos2D;
 import ir.tapsell.sdk.TapsellCocos2DListener;
 import ir.tapsell.sdk.TapsellCocos2DModule;
+import ir.tapsell.sdk.nativeads.TapsellCocos2DNativeListener;
+
 
 public class Tapsell {
 
@@ -20,22 +20,23 @@ public class Tapsell {
     private static final String COMMA = ",";
 
     public static void newInstance(Cocos2dxActivity app) {
+        Tapsell.app = app;
         tapsellCocos2DModule = new TapsellCocos2DModule(app);
         Tapsell tapsell = new Tapsell();
         tapsell.initializeTapsell();
     }
 
-    private String createJSParam(String param, boolean comma) {
+    private static String createJSParam(String param, boolean comma) {
         String postfix = comma ? COMMA : "";
         return "\"" + param + "\"" + postfix;
     }
 
-    private String createJSParam(int param, boolean comma) {
+    private static String createJSParam(int param, boolean comma) {
         String postfix = comma ? COMMA : "";
         return "\"" + param + "\"" + postfix;
     }
 
-    private String createJSParam(boolean param, boolean comma) {
+    private static String createJSParam(boolean param, boolean comma) {
         String postfix = comma ? COMMA : "";
         return "\"" + param + "\"" + postfix;
     }
@@ -44,60 +45,102 @@ public class Tapsell {
 
         tapsellCocos2D = TapsellCocos2D.newInstance(new TapsellCocos2DListener() {
             @Override
-            public void onAdShowFinished(String zoneId, String adId, boolean completed, boolean rewarded) {
-
-                Cocos2dxJavascriptJavaBridge.evalString("callbacks.onAdShowFinished(" +
-                        createJSParam(zoneId, true) +
-                        createJSParam(adId, true) +
-                        createJSParam(completed, true) +
-                        createJSParam(rewarded, false)+ ");");
+            public void onAdShowFinished(final String zoneId, final String adId, final boolean completed, final boolean rewarded) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString("callbacks.onAdShowFinished(" +
+                                createJSParam(zoneId, true) +
+                                createJSParam(adId, true) +
+                                createJSParam(completed, true) +
+                                createJSParam(rewarded, false)+ ");");
+                    }
+                });
             }
 
             @Override
-            public void onAdAvailable(String zoneId, String adId) {
-                Cocos2dxJavascriptJavaBridge.evalString("callbacks.onAdAvailable(" +
-                        createJSParam(zoneId, true) +
-                        createJSParam(adId, false) + ");");
+            public void onAdAvailable(final String zoneId, final String adId) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString("callbacks.onAdAvailable(" +
+                                createJSParam(zoneId, true) +
+                                createJSParam(adId, false) + ");");
+                    }
+                });
+
             }
 
             @Override
-            public void onError(String zoneId, String error) {
-                Cocos2dxJavascriptJavaBridge.evalString("callbacks.onError(" +
-                        createJSParam(zoneId, true) +
-                        createJSParam(error, false) + ");");
+            public void onError(final String zoneId, final String error) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString("callbacks.onError(" +
+                                createJSParam(zoneId, true) +
+                                createJSParam(error, false) + ");");
+                    }
+                });
             }
 
             @Override
-            public void onNoAdAvailable(String zoneId) {
-                Cocos2dxJavascriptJavaBridge.evalString("callbacks.onNoAdAvailable(" +
-                        createJSParam(zoneId, false) + ");");
+            public void onNoAdAvailable(final String zoneId) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString("callbacks.onNoAdAvailable(" +
+                                createJSParam(zoneId, false) + ");");
+                    }
+                });
+
             }
 
             @Override
-            public void onNoNetwork(String zoneId) {
-                Cocos2dxJavascriptJavaBridge.evalString("callbacks.onNoNetwork(" +
-                        createJSParam(zoneId, false) + ");");
+            public void onNoNetwork(final String zoneId) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString("callbacks.onNoNetwork(" +
+                                createJSParam(zoneId, false) + ");");
+                    }
+                });
             }
 
             @Override
-            public void onExpiring(String zoneId, String adId) {
-                Cocos2dxJavascriptJavaBridge.evalString("callbacks.onExpiring(" +
-                        createJSParam(zoneId, true) +
-                        createJSParam(adId, false) + ");");
+            public void onExpiring(final String zoneId, final String adId) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString("callbacks.onExpiring(" +
+                                createJSParam(zoneId, true) +
+                                createJSParam(adId, false) + ");");
+                    }
+                });
             }
 
             @Override
-            public void onClosed(String zoneId, String adId) {
-                Cocos2dxJavascriptJavaBridge.evalString("callbacks.onClosed(" +
-                        createJSParam(zoneId, true) +
-                        createJSParam(adId, false) + ");");
+            public void onClosed(final String zoneId, final String adId) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString("callbacks.onClosed(" +
+                                createJSParam(zoneId, true) +
+                                createJSParam(adId, false) + ");");
+                    }
+                });
+
             }
 
             @Override
-            public void onOpened(String zoneId, String adId) {
-                Cocos2dxJavascriptJavaBridge.evalString("callbacks.onOpened(" +
-                        createJSParam(zoneId, true) +
-                        createJSParam(adId, false) + ");");
+            public void onOpened(final String zoneId, final String adId) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString("callbacks.onOpened(" +
+                                createJSParam(zoneId, true) +
+                                createJSParam(adId, false) + ");");
+                    }
+                });
             }
         });
     }
@@ -116,6 +159,60 @@ public class Tapsell {
 
     public static void requestAd(String zoneId, boolean isCached) {
         tapsellCocos2DModule.requestAd(zoneId, isCached);
+    }
+
+
+
+    public static void nativeBannerAdShown(String ad_id) {
+        tapsellCocos2DModule.nativeBannerAdShown(ad_id, app);
+    }
+
+    public static void nativeBannerAdClicked(String ad_id) {
+        tapsellCocos2DModule.nativeBannerAdClicked(ad_id, app);
+    }
+
+    public static void requestNativeBannerAd(final String zoneId) {
+        tapsellCocos2DModule.requestNativeBannerAd(zoneId, app, new TapsellCocos2DNativeListener() {
+            @Override
+            public void onAdAvailable(final String jsCall) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString(jsCall);
+                    }
+                });
+            }
+
+            @Override
+            public void onNoAdAvailable(final String jsCall) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString(jsCall);
+                    }
+                });
+            }
+
+            @Override
+            public void onNoNetwork(final String jsCall) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString(jsCall);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(final String jsCall) {
+                app.runOnGLThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Cocos2dxJavascriptJavaBridge.evalString(jsCall);
+                    }
+                });
+            }
+        });
     }
 
     public static void setDebugMode(boolean debug) {
