@@ -116,6 +116,29 @@ NSMutableDictionary * tapsellAds;
     [Tapsell nativeBannerAdClickedWithAdId:adId];
 }
 
++(void)requestNativeVideoAd:(NSString*)zoneId {
+    [Tapsell requestNativeVideoAdForZone:zoneId
+                            onAdAvailable:^(TSNativeVideoAdWrapper* ad) {
+                                if(ad != nil) {
+                                    NSString* adProps = [self createJSON:@[@"ad_id",@"title",@"description",@"icon_url",@"video_url"] withValues:@[ad.adId, ad.title, ad.htmlDescription, ad.logoUrl, ad.videoUrl]];
+                                    [self callJS:[self rawJs:@"nativeVideoCallbacks.onAdAvailable" arguments:@[zoneId, adProps]]];
+                                }
+                            }
+                          onNoAdAvailable:^(void) {
+                              [self callJS:[self rawJs:@"nativeVideoCallbacks.onNoAdAvailable" arguments:@[zoneId]]];
+                          }
+                                  onError:^(NSString* error) {
+                                      [self callJS:[self rawJs:@"nativeVideoCallbacks.onError" arguments:@[zoneId, error]]];
+                                  }];
+}
+
++(void)onNativeVideoAdShown:(NSString*)adId {
+    [Tapsell nativeVideoAdShowWithAdId:adId];
+}
++(void)onNativeVideoAdClicked:(NSString*)adId {
+    [Tapsell nativeVideoAdClickedWithAdId:adId];
+}
+
 +(void)setRewardListener {
     [Tapsell setAdShowFinishedCallback:^(TapsellAd *ad, BOOL completed) {
         NSString* jsCompleted = @"false";

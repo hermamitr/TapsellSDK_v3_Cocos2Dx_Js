@@ -7,6 +7,9 @@
 +(void)requestNativeBannerAd:(NSString*)zoneId;
 +(void)onNativeBannerAdShown:(NSString*)adId;
 +(void)onNativeBannerAdClicked:(NSString*)adId;
++(void)requestNativeVideoAd:(NSString*)zoneId;
++(void)onNativeVideoAdShown:(NSString*)adId;
++(void)onNativeVideoAdClicked:(NSString*)adId;
 +(void)showAd:(NSInteger)rotationMode adId:(NSString*)adId backDisabled:(BOOL)backDisabled showExitDialog:(BOOL)showExitDialog;
 +(void)setRewardListener;
 +(void)setDebugMode:(NSNumber*)mode;

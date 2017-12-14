@@ -1,8 +1,8 @@
 var APP_KEY =
-	"qjmospqbfarbhodregqecbbnfhcjllkflpbpsmdrtpqkapdeptftldfiapfgbamkhalbij";
-var ZONE_ID = "59b4d07d468465281b792cb7";
-var NATIVE_BANNER_ZONEID = "59c8a9334684656c504f0e19";
-var NATIVE_VIDEO_ZONEID = "59c8ae514684656c504fce40";
+	"rashssjnjiaeqqeihgjdsihajkbkqgeqqdoftpafmlcoofdflejgmttlercbsdfbnjnjqs";
+var ZONE_ID = "586e4ed1bc5c28712bd8d50c";
+var NATIVE_BANNER_ZONEID = "5a291e3edc93ee00017fad23";
+var NATIVE_VIDEO_ZONEID = "5a28eeffd005ec0001b386c6";
 var AD_ID = "";
 var NATIVE_BANNER_AD_ID = "";
 var NATIVE_VIDEO_AD_ID = "";

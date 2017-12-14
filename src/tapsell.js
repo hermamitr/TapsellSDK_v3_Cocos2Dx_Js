@@ -408,6 +408,41 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 				"onNativeBannerAdClicked:",
 				adId
 			);
+        },
+        
+        requestNativeVideoAd: function(
+			zoneId,
+			onAdAvailable,
+			onNoAdAvailable,
+			onNoNetwork,
+			onError
+		) {
+			requestNativeVideoCallbacks[zoneId] = {
+				ON_AD_AVAILABLE_CB: onAdAvailable,
+				ON_ERROR_CB: onError,
+				ON_NO_AD_AVAILABLE_CB: onNoAdAvailable,
+			};
+			jsb.reflection.callStaticMethod(
+				"TSTapsell",
+				"requestNativeVideoAd:",
+				zoneId
+			);
+		},
+
+		onNativeVideoAdShown: function(adId) {
+			jsb.reflection.callStaticMethod(
+				"TSTapsell",
+				"onNativeVideoAdShown:",
+				adId
+			);
+		},
+
+		onNativeVideoAdClicked: function(adId) {
+			jsb.reflection.callStaticMethod(
+				"TSTapsell",
+				"onNativeVideoAdClicked:",
+				adId
+			);
 		},
 
 		setRewardListener: function(rewardListener) {
@@ -476,6 +511,41 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 			if (requestNativeBannerCallbacks[zoneId]["ON_ERROR_CB"]) {
 				requestNativeBannerCallbacks[zoneId]["ON_ERROR_CB"](error);
 				requestNativeBannerCallbacks[zoneId]["ON_ERROR_CB"] = undefined;
+			}
+		}
+    };
+    
+    nativeVideoCallbacks = {
+		onAdAvailable: function(zoneId, adProps) {
+			if (requestNativeVideoCallbacks[zoneId]["ON_AD_AVAILABLE_CB"]) {
+				requestNativeVideoCallbacks[zoneId]["ON_AD_AVAILABLE_CB"](
+					adProps
+				);
+				requestNativeVideoCallbacks[zoneId][
+					"ON_AD_AVAILABLE_CB"
+				] = undefined;
+			}
+		},
+		onNoAdAvailable: function(zoneId) {
+			if (requestNativeVideoCallbacks[zoneId]["ON_NO_AD_AVAILABLE_CB"]) {
+				requestNativeVideoCallbacks[zoneId]["ON_NO_AD_AVAILABLE_CB"]();
+				requestNativeVideoCallbacks[zoneId][
+					"ON_NO_AD_AVAILABLE_CB"
+				] = undefined;
+			}
+		},
+		onNoNetwork: function(zoneId) {
+			if (requestNativeVideoCallbacks[zoneId]["ON_NO_NETWORK_CB"]) {
+				requestNativeVideoCallbacks[zoneId]["ON_NO_NETWORK_CB"]();
+				requestNativeVideoCallbacks[zoneId][
+					"ON_NO_NETWORK_CB"
+				] = undefined;
+			}
+		},
+		onError: function(zoneId, error) {
+			if (requestNativeVideoCallbacks[zoneId]["ON_ERROR_CB"]) {
+				requestNativeVideoCallbacks[zoneId]["ON_ERROR_CB"](error);
+				requestNativeVideoCallbacks[zoneId]["ON_ERROR_CB"] = undefined;
 			}
 		}
 	};
