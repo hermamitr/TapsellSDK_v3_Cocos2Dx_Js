@@ -97,7 +97,7 @@ NSMutableDictionary * tapsellAds;
     [Tapsell requestNativeBannerAdForZone:zoneId
             onAdAvailable:^(TSNativeBannerAdWrapper* ad) {
                 if(ad != nil) {
-                    NSString* adProps = [self createJSON:@[@"ad_id",@"title",@"description",@"icon_url",@"portriat_image_url",@"landscape_image_url"] withValues:@[ad.adId, ad.title, ad.htmlDescription, ad.logoUrl, ad.portriatImageUrl, ad.landscapeImageUrl]];
+                    NSString* adProps = [self createJSON:@[@"ad_id",@"title",@"description",@"call_to_action_text",@"icon_url",@"portriat_image_url",@"landscape_image_url"] withValues:@[ad.adId, ad.title, ad.htmlDescription, ad.callToActionText, ad.logoUrl, ad.portriatImageUrl, ad.landscapeImageUrl]];
                     [self callJS:[self rawJs:@"nativeBannerCallbacks.onAdAvailable" arguments:@[zoneId, adProps]]];
                 }
             }
@@ -120,7 +120,7 @@ NSMutableDictionary * tapsellAds;
     [Tapsell requestNativeVideoAdForZone:zoneId
                             onAdAvailable:^(TSNativeVideoAdWrapper* ad) {
                                 if(ad != nil) {
-                                    NSString* adProps = [self createJSON:@[@"ad_id",@"title",@"description",@"icon_url",@"video_url"] withValues:@[ad.adId, ad.title, ad.htmlDescription, ad.logoUrl, ad.videoUrl]];
+                                    NSString* adProps = [self createJSON:@[@"ad_id",@"title",@"description",@"call_to_action_text",@"icon_url",@"video_url"] withValues:@[ad.adId, ad.title, ad.htmlDescription, ad.callToActionText, ad.logoUrl, ad.videoUrl]];
                                     [self callJS:[self rawJs:@"nativeVideoCallbacks.onAdAvailable" arguments:@[zoneId, adProps]]];
                                 }
                             }
