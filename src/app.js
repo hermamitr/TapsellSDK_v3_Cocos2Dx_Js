@@ -1,8 +1,9 @@
 var APP_KEY =
-	"rashssjnjiaeqqeihgjdsihajkbkqgeqqdoftpafmlcoofdflejgmttlercbsdfbnjnjqs";
-var ZONE_ID = "586e4ed1bc5c28712bd8d50c";
-var NATIVE_BANNER_ZONEID = "5a291e3edc93ee00017fad23";
-var NATIVE_VIDEO_ZONEID = "5a28eeffd005ec0001b386c6";
+        "qjmospqbfarbhodregqecbbnfhcjllkflpbpsmdrtpqkapdeptftldfiapfgbamkhalbij";
+var ZONE_ID = "59b4d07d468465281b792cb7";
+var NATIVE_BANNER_ZONEID = "59c8a9334684656c504f0e19";
+var NATIVE_VIDEO_ZONEID = "59c8ae514684656c504fce40";
+var STANDARD_BANNER_ZONEID = "5a44aa6565a77100013d5fb3";
 var AD_ID = "";
 var NATIVE_BANNER_AD_ID = "";
 var NATIVE_VIDEO_AD_ID = "";
@@ -16,7 +17,7 @@ var HelloWorldLayer = cc.Layer.extend({
 		Tapsell.setDebugMode(true);
 		Tapsell.initialize(APP_KEY);
 		var size = cc.winSize;
-
+        Tapsell.requestStandardBannerAd(STANDARD_BANNER_ZONEID, Tapsell.BANNER_320x50, Tapsell.BOTTOM, Tapsell.CENTER);
 		var menuItem1 = new cc.MenuItemFont("RequestAd", onRequestAdClicked);
 		var menuItem2 = new cc.MenuItemFont("ShowAd", onShowAdClicked);
 		var menuItem3 = new cc.MenuItemFont(
@@ -28,10 +29,10 @@ var HelloWorldLayer = cc.Layer.extend({
 			onRequestNativeVideoAdClicked
 		);
 
-		menuItem1.setPosition(cc.p(size.width / 2, size.height / 5 * 4));
-		menuItem2.setPosition(cc.p(size.width / 2, size.height / 5 * 3));
-		menuItem3.setPosition(cc.p(size.width / 2, size.height / 5 * 2));
-		menuItem4.setPosition(cc.p(size.width / 2, size.height / 5));
+		menuItem1.setPosition(cc.p(size.width / 2, size.height / 7 * 6));
+		menuItem2.setPosition(cc.p(size.width / 2, size.height / 7 * 5));
+		menuItem3.setPosition(cc.p(size.width / 2, size.height / 7 * 4));
+		menuItem4.setPosition(cc.p(size.width / 2, size.height / 7 * 3));
 
 		var menu = new cc.Menu(menuItem1, menuItem2, menuItem3, menuItem4);
 		menu.setPosition(cc.p(0, 0));
@@ -41,7 +42,7 @@ var HelloWorldLayer = cc.Layer.extend({
 		fontDef.fontName = "Arial";
 		fontDef.fontSize = "24";
 		var myLabel = new cc.LabelTTF("NativeAd Title", fontDef);
-		myLabel.setPosition(cc.p(size.width / 2, size.height / 12));
+		myLabel.setPosition(cc.p(size.width / 2, size.height / 7 * 2));
 		nativeProps.title = myLabel;
 		var ctaListener = cc.EventListener.create({
 			event: cc.EventListener.TOUCH_ONE_BY_ONE,

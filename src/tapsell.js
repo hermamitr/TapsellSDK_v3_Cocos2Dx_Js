@@ -131,6 +131,23 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 			);
 		},
 
+		requestStandardBannerAd: function(
+			zoneId,
+			bannerType,
+			horizontalGravity,
+			verticalGravity
+		) {
+			jsb.reflection.callStaticMethod(
+				"org/cocos2dx/javascript/Tapsell",
+				"requestStandardBannerAd",
+				"(Ljava/lang/String;III)V",
+				zoneId,
+				bannerType,
+				horizontalGravity,
+				verticalGravity
+			);
+		},
+
 		initialize: function(appKey) {
 			jsb.reflection.callStaticMethod(
 				"org/cocos2dx/javascript/Tapsell",
@@ -212,7 +229,16 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 		ROTATION_LOCKED_LANDSCAPE: 2,
 		ROTATION_UNLOCKED: 3,
 		ROTATION_LOCKED_REVERSED_LANDSCAPE: 4,
-		ROTATION_LOCKED_REVERSED_PORTRAIT: 5
+		ROTATION_LOCKED_REVERSED_PORTRAIT: 5,
+		BANNER_320x50: 1,
+		BANNER_320x100: 2,
+		BANNER_250x250: 3,
+		BANNER_300x250: 4,
+		TOP: 1,
+		BOTTOM: 2,
+		LEFT: 3,
+		RIGHT: 4,
+		CENTER: 5
 	};
 
 	nativeBannerCallbacks = {
@@ -385,7 +411,7 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 			requestNativeBannerCallbacks[zoneId] = {
 				ON_AD_AVAILABLE_CB: onAdAvailable,
 				ON_ERROR_CB: onError,
-				ON_NO_AD_AVAILABLE_CB: onNoAdAvailable,
+				ON_NO_AD_AVAILABLE_CB: onNoAdAvailable
 			};
 			jsb.reflection.callStaticMethod(
 				"TSTapsell",
@@ -408,9 +434,9 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 				"onNativeBannerAdClicked:",
 				adId
 			);
-        },
-        
-        requestNativeVideoAd: function(
+		},
+
+		requestNativeVideoAd: function(
 			zoneId,
 			onAdAvailable,
 			onNoAdAvailable,
@@ -420,7 +446,7 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 			requestNativeVideoCallbacks[zoneId] = {
 				ON_AD_AVAILABLE_CB: onAdAvailable,
 				ON_ERROR_CB: onError,
-				ON_NO_AD_AVAILABLE_CB: onNoAdAvailable,
+				ON_NO_AD_AVAILABLE_CB: onNoAdAvailable
 			};
 			jsb.reflection.callStaticMethod(
 				"TSTapsell",
@@ -513,9 +539,9 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 				requestNativeBannerCallbacks[zoneId]["ON_ERROR_CB"] = undefined;
 			}
 		}
-    };
-    
-    nativeVideoCallbacks = {
+	};
+
+	nativeVideoCallbacks = {
 		onAdAvailable: function(zoneId, adProps) {
 			if (requestNativeVideoCallbacks[zoneId]["ON_AD_AVAILABLE_CB"]) {
 				requestNativeVideoCallbacks[zoneId]["ON_AD_AVAILABLE_CB"](
