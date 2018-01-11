@@ -139,6 +139,14 @@ NSMutableDictionary * tapsellAds;
     [Tapsell nativeVideoAdClickedWithAdId:adId];
 }
 
++(void)requestStandardBannerAd:(NSString*)zoneId withType:(NSNumber*)bannerType
+         withHorizontalGravity:(NSNumber*)horizontalGravity withVerticalGravity:(NSNumber*)verticalGravity {
+    [TSBannerAdView loadAdWithZoneId:zoneId
+                       andBannerType:bannerType
+                     andHorizGravity:horizontalGravity
+                      andVertGravity:verticalGravity];
+}
+
 +(void)setRewardListener {
     [Tapsell setAdShowFinishedCallback:^(TapsellAd *ad, BOOL completed) {
         NSString* jsCompleted = @"false";

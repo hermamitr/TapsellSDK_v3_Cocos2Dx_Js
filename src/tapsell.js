@@ -469,6 +469,21 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 				"onNativeVideoAdClicked:",
 				adId
 			);
+        },
+        requestStandardBannerAd: function(
+			zoneId,
+			bannerType,
+			horizontalGravity,
+			verticalGravity
+		) {
+			jsb.reflection.callStaticMethod(
+				"TSTapsell",
+                "requestStandardBannerAd:withType:withHorizontalGravity:withVerticalGravity:",
+				zoneId,
+				bannerType,
+				horizontalGravity,
+				verticalGravity
+			);
 		},
 
 		setRewardListener: function(rewardListener) {
@@ -651,7 +666,16 @@ if (cc.sys.os == cc.sys.OS_ANDROID) {
 		ROTATION_LOCKED_LANDSCAPE: 2,
 		ROTATION_UNLOCKED: 3,
 		ROTATION_LOCKED_REVERSED_LANDSCAPE: 4,
-		ROTATION_LOCKED_REVERSED_PORTRAIT: 5
+        ROTATION_LOCKED_REVERSED_PORTRAIT: 5,
+        BANNER_320x50: 1,
+		BANNER_320x100: 2,
+		BANNER_250x250: 3,
+		BANNER_300x250: 4,
+		TOP: 1,
+		BOTTOM: 2,
+		LEFT: 3,
+		RIGHT: 4,
+		CENTER: 5
 	};
 
 	callbacks = {

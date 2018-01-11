@@ -10,7 +10,10 @@
 +(void)requestNativeVideoAd:(NSString*)zoneId;
 +(void)onNativeVideoAdShown:(NSString*)adId;
 +(void)onNativeVideoAdClicked:(NSString*)adId;
-+(void)showAd:(NSInteger)rotationMode adId:(NSString*)adId backDisabled:(BOOL)backDisabled showExitDialog:(BOOL)showExitDialog;
++(void)showAd:(NSInteger)rotationMode adId:(NSString*)adId
+ backDisabled:(BOOL)backDisabled showExitDialog:(BOOL)showExitDialog;
++(void)requestStandardBannerAd:(NSString*)zoneId withType:(NSNumber*)bannerType
+         withHorizontalGravity:(NSNumber*)horizontalGravity withVerticalGravity:(NSNumber*)verticalGravity;
 +(void)setRewardListener;
 +(void)setDebugMode:(NSNumber*)mode;
 +(NSNumber*)isDebugMode;

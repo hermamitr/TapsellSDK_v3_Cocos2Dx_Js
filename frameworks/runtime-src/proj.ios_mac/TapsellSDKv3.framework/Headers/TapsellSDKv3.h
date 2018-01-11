@@ -19,6 +19,7 @@ FOUNDATION_EXPORT const unsigned char TapsellSDKv3VersionString[];
 #import <TapsellSDKv3/TSBannerAdView.h>
 #import <TapsellSDKv3/TSNativeBannerAdView.h>
 #import <TapsellSDKv3/TSNativeVideoAdView.h>
+#import <TapsellSDKv3/TSNativeVideoContainerView.h>
 #import <TapsellSDKv3/TSNativeBannerAdWrapper.h>
 #import <TapsellSDKv3/TSNativeVideoAdWrapper.h>
 #import <TapsellSDKv3/TSNativeBannerBundle.h>
