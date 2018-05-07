@@ -61,7 +61,6 @@
 یا onCreateView ، تابع Tapsell.newInstance را صدا بزنید :
 <pre style="color: #000000; background: #ffffff;"dir="ltr"><span style="color: #696969;">// AppActivity.java</span>
 <span style="color: #800000; font-weight: bold;">public</span> <span style="color: #800000; font-weight: bold;">class</span> AppActivity <span style="color: #800000; font-weight: bold;">extends</span> Cocos2dxActivity <span style="color: #800080;">{</span>
-
     <span style="color: #808030;">@</span>Override
     <span style="color: #800000; font-weight: bold;">public</span> Cocos2dxGLSurfaceView onCreateView<span style="color: #808030;">(</span><span style="color: #808030;">)</span> <span style="color: #800080;">{</span>
         Cocos2dxGLSurfaceView glSurfaceView <span style="color: #808030;">=</span> <span style="color: #800000; font-weight: bold;">new</span> Cocos2dxGLSurfaceView<span style="color: #808030;">(</span><span style="color: #800000; font-weight: bold;">this</span><span style="color: #808030;">)</span><span style="color: #800080;">;</span>
